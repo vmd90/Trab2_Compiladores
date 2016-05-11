@@ -1,0 +1,24 @@
+#define NUMERO_INT                1
+#define NUMERO_REAL               2
+#define PALAVRA_RESERVADA         3
+#define ID                        4
+#define SIMB_ABRE_PARENTESES      5
+#define SIMB_FECHA_PARENTESES     6
+#define SIMB_PONTO_VIRGULA        7
+#define SIMB_PONTO                8
+#define SIMB_MULTIPLICACAO        9
+#define SIMB_DIVISAO              10
+#define SIMB_DOIS_PONTOS          11
+#define SIMB_VIRGULA              12
+#define SIMB_ADICAO               13
+#define SIMB_SUBTRACAO            14
+#define SIMB_MAIOR                15
+#define SIMB_MENOR                16
+#define SIMB_DIFERENTE            17
+#define SIMB_MENOR_IGUAL          18
+#define SIMB_MAIOR_IGUAL          19
+#define COMENTARIO		  20
+#define SIMB_ERRO                 21
+#define SIMB_ATRIBUICAO           22
+#define SIMB_IGUAL                23
+

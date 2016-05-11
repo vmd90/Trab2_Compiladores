@@ -1,0 +1,151 @@
+Terminals unused in grammar
+
+   NUMERO_INT
+   NUMERO_REAL
+   PALAVRA_RESERVADA
+   SIMB_ABRE_PARENTESES
+   SIMB_FECHA_PARENTESES
+   SIMB_PONTO_VIRGULA
+   SIMB_PONTO
+   SIMB_MULTIPLICACAO
+   SIMB_DIVISAO
+   SIMB_DOIS_PONTOS
+   SIMB_VIRGULA
+   SIMB_ADICAO
+   SIMB_SUBTRACAO
+   SIMB_MAIOR
+   SIMB_MENOR
+   SIMB_DIFERENTE
+   SIMB_MENOR_IGUAL
+   SIMB_MAIOR_IGUAL
+   COMENTARIO
+   SIMB_ERRO
+   SIMB_ATRIBUICAO
+   SIMB_IGUAL
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: 'p' ID ';' corpo '.'
+
+    2 corpo: 'b' 'e'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'.' (46) 1
+';' (59) 1
+'b' (98) 2
+'e' (101) 2
+'p' (112) 1
+error (256)
+NUMERO_INT (258)
+NUMERO_REAL (259)
+PALAVRA_RESERVADA (260)
+ID (261) 1
+SIMB_ABRE_PARENTESES (262)
+SIMB_FECHA_PARENTESES (263)
+SIMB_PONTO_VIRGULA (264)
+SIMB_PONTO (265)
+SIMB_MULTIPLICACAO (266)
+SIMB_DIVISAO (267)
+SIMB_DOIS_PONTOS (268)
+SIMB_VIRGULA (269)
+SIMB_ADICAO (270)
+SIMB_SUBTRACAO (271)
+SIMB_MAIOR (272)
+SIMB_MENOR (273)
+SIMB_DIFERENTE (274)
+SIMB_MENOR_IGUAL (275)
+SIMB_MAIOR_IGUAL (276)
+COMENTARIO (277)
+SIMB_ERRO (278)
+SIMB_ATRIBUICAO (279)
+SIMB_IGUAL (280)
+
+
+Nonterminals, with rules where they appear
+
+$accept (31)
+    on left: 0
+programa (32)
+    on left: 1, on right: 0
+corpo (33)
+    on left: 2, on right: 1
+
+
+State 0
+
+    0 $accept: . programa $end
+
+    'p'  shift, and go to state 1
+
+    programa  go to state 2
+
+
+State 1
+
+    1 programa: 'p' . ID ';' corpo '.'
+
+    ID  shift, and go to state 3
+
+
+State 2
+
+    0 $accept: programa . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    1 programa: 'p' ID . ';' corpo '.'
+
+    ';'  shift, and go to state 5
+
+
+State 4
+
+    0 $accept: programa $end .
+
+    $default  accept
+
+
+State 5
+
+    1 programa: 'p' ID ';' . corpo '.'
+
+    'b'  shift, and go to state 6
+
+    corpo  go to state 7
+
+
+State 6
+
+    2 corpo: 'b' . 'e'
+
+    'e'  shift, and go to state 8
+
+
+State 7
+
+    1 programa: 'p' ID ';' corpo . '.'
+
+    '.'  shift, and go to state 9
+
+
+State 8
+
+    2 corpo: 'b' 'e' .
+
+    $default  reduce using rule 2 (corpo)
+
+
+State 9
+
+    1 programa: 'p' ID ';' corpo '.' .
+
+    $default  reduce using rule 1 (programa)
