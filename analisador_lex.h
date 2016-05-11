@@ -17,8 +17,23 @@
 #define SIMB_DIFERENTE            17
 #define SIMB_MENOR_IGUAL          18
 #define SIMB_MAIOR_IGUAL          19
-#define COMENTARIO		  20
+#define COMENTARIO 				20
 #define SIMB_ERRO                 21
 #define SIMB_ATRIBUICAO           22
 #define SIMB_IGUAL                23
+#define PROGRAM					24
+#define BEGIN					25
+#define END						26
+#define CONST					27
+#define VAR						28
+#define REAL 					29
+#define INTEGER					30
+#define PROCEDURE				31
+#define IF						32
+#define ELSE					33
+#define WHILE					34
+#define FOR						35
+#define DO 						36
+#define WRITE					37
+#define READ 					38
 

@@ -32,6 +32,22 @@ id                      [a-zA-Z][a-zA-Z0-9\_]*
 ">="                    return SIMB_MAIOR_IGUAL;
 ":="                    return SIMB_ATRIBUICAO;
 "="                     return SIMB_IGUAL;
+"program"		return PROGRAM;
+"begin"			return BEGIN;
+"end"			return END;
+"const"			return CONST;
+"var"			return VAR;
+"real"			return REAL;
+"integer"		return INTEGER;
+"procedure"		return PROCEDURE;
+"if"			return IF;
+"else"			return ELSE;
+"while"			return WHILE;
+"for"			return FOR;
+"do"			return DO;
+"write"			return WRITE;
+"read"			return READ;
+
 {numero_int}            return NUMERO_INT;
 {palavra_reservada}     return PALAVRA_RESERVADA;
 {id}                    return ID;

@@ -36,14 +36,122 @@ void yyerror (char *s);
 programa: 'program' ID ';' corpo '.'	{;}
 		;
 
-corpo:  'begin'  'end'		{;}
+corpo: dc 'begin' comandos 'end'		{;}
 		;
-/*
+
 dc: dc_c dc_v dc_p						{;}
+		;
 
 dc_c: 'const' ID '=' numero ';' dc_c	{;}
-	| ;
-*/
+		|
+		;
+
+dc_v: 'var' variaveis ':' tipo_var ';' dc_v		{;}
+		|
+		;
+
+tipo_var: 'real'		{;}
+		| 'integer'		{;}
+		;
+
+variaveis: ID mais_var		{;}
+		;
+
+mais_var: ',' variaveis		{;}
+		|
+		;
+
+dc_p: 'procedure' ID parametros ';' corpo_p dc_p	{;}
+		|
+		;
+
+parametros: '(' lista_par ')'		{;}
+		|
+		;
+
+lista_par: variaveis ':' tipo_var mais_var	{;}
+		;
+
+mais_par: ';' lista_par		{;}
+		|
+		;
+
+corpo_p: dc_loc 'begin' comandos 'end' ';'	{;}
+		;
+
+dc_loc: dc_v		{;}
+		;
+
+lista_arg: '(' argumentos ')'	{;}
+		|
+		;
+
+argumentos: ID mais_ident	{;}
+		;
+
+mais_ident: ';' argumentos	{;}
+		|
+		;
+
+pfalsa: 'else' cmd 		{;}
+		|
+		;
+
+comandos: cmd ';' comandos		{;}
+		|
+		;
+
+cmd: 'read' '(' variaveis ')'					{;}
+		| 'write' '(' variaveis ')' 			{;}
+		| 'while' '(' condicao ')' 'do' cmd 	{;}
+		| 'if' condicao 'then' cmd pfalsa		{;}
+		| ID ':=' expressao						{;}
+		| ID lista_arg							{;}
+		| 'begin' comandos 'end'				{;}
+		;
+
+condicao: expressao relacao expressao		{;}
+		;
+
+relacao: '='	{;}
+		| '<>'	{;}
+		| '>='	{;}
+		| '<='	{;}
+		| '>' 	{;}
+		| '<'	{;}
+		;
+
+expressao: termo outros_termos	{;}
+		;
+
+op_un: '+'	{;}
+		| '-'	{;}
+		|
+		;
+
+outros_termos: op_ad termo outros_termos	{;}
+		|
+		;
+
+op_ad: '+'	{;}
+		|'-'	{;}
+		;
+
+termo: op_un fator mais_fatores		{;}
+		;
+
+op_mul: '*'		{;}
+		|'/'	{;}
+		;
+
+fator: ID 	{;}
+		| numero 	{;}
+		| '(' expressao ')'		{;}
+		;
+
+numero: NUMERO_INT		{;}
+		| NUMERO_REAL	{;}
+		;
 
 %%
 
