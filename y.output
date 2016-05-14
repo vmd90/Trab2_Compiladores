@@ -1,94 +1,237 @@
 Terminals unused in grammar
 
-   NUMERO_INT
-   NUMERO_REAL
-   PALAVRA_RESERVADA
-   SIMB_ABRE_PARENTESES
-   SIMB_FECHA_PARENTESES
-   SIMB_PONTO_VIRGULA
-   SIMB_PONTO
-   SIMB_MULTIPLICACAO
-   SIMB_DIVISAO
-   SIMB_DOIS_PONTOS
-   SIMB_VIRGULA
-   SIMB_ADICAO
-   SIMB_SUBTRACAO
-   SIMB_MAIOR
-   SIMB_MENOR
-   SIMB_DIFERENTE
-   SIMB_MENOR_IGUAL
-   SIMB_MAIOR_IGUAL
    COMENTARIO
    SIMB_ERRO
-   SIMB_ATRIBUICAO
    SIMB_IGUAL
+   FOR
+
+
+State 85 conflicts: 1 shift/reduce
 
 
 Grammar
 
     0 $accept: programa $end
 
-    1 programa: 'p' ID ';' corpo '.'
+    1 programa: PROGRAM ID ';' corpo '.'
 
-    2 corpo: 'b' 'e'
+    2 corpo: dc P_BEGIN comandos P_END
+
+    3 dc: dc_c dc_v dc_p
+
+    4 dc_c: CONST ID '=' numero ';' dc_c
+    5     | %empty
+
+    6 dc_v: VAR variaveis ':' tipo_var ';' dc_v
+    7     | %empty
+
+    8 tipo_var: REAL
+    9         | INTEGER
+
+   10 variaveis: ID mais_var
+
+   11 mais_var: ',' variaveis
+   12         | %empty
+
+   13 dc_p: PROCEDURE ID parametros ';' corpo_p dc_p
+   14     | %empty
+
+   15 parametros: '(' lista_par ')'
+   16           | %empty
+
+   17 lista_par: variaveis ':' tipo_var mais_par
+
+   18 mais_par: ';' lista_par
+   19         | %empty
+
+   20 corpo_p: dc_loc P_BEGIN comandos P_END ';'
+
+   21 dc_loc: dc_v
+
+   22 lista_arg: '(' argumentos ')'
+   23          | %empty
+
+   24 argumentos: ID mais_ident
+
+   25 mais_ident: ';' argumentos
+   26           | %empty
+
+   27 pfalsa: ELSE cmd
+   28       | %empty
+
+   29 comandos: cmd ';' comandos
+   30         | %empty
+
+   31 cmd: READ '(' variaveis ')'
+   32    | WRITE '(' variaveis ')'
+   33    | WHILE '(' condicao ')' DO cmd
+   34    | IF condicao THEN cmd pfalsa
+   35    | ID SIMB_ATRIBUICAO expressao
+   36    | ID lista_arg
+   37    | P_BEGIN comandos P_END
+
+   38 condicao: expressao relacao expressao
+
+   39 relacao: '='
+   40        | SIMB_DIFERENTE
+   41        | SIMB_MAIOR_IGUAL
+   42        | SIMB_MENOR_IGUAL
+   43        | '>'
+   44        | '<'
+
+   45 expressao: termo outros_termos
+
+   46 op_un: '+'
+   47      | '-'
+   48      | %empty
+
+   49 outros_termos: op_ad termo outros_termos
+   50              | %empty
+
+   51 op_ad: '+'
+   52      | '-'
+
+   53 termo: op_un fator mais_fatores
+
+   54 mais_fatores: op_mul fator mais_fatores
+   55             | %empty
+
+   56 op_mul: '*'
+   57       | '/'
+
+   58 fator: ID
+   59      | numero
+   60      | '(' expressao ')'
+
+   61 numero: NUMERO_INT
+   62       | NUMERO_REAL
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
+'(' (40) 15 22 31 32 33 60
+')' (41) 15 22 31 32 33 60
+'*' (42) 56
+'+' (43) 46 51
+',' (44) 11
+'-' (45) 47 52
 '.' (46) 1
-';' (59) 1
-'b' (98) 2
-'e' (101) 2
-'p' (112) 1
+'/' (47) 57
+':' (58) 6 17
+';' (59) 1 4 6 13 18 20 25 29
+'<' (60) 44
+'=' (61) 4 39
+'>' (62) 43
 error (256)
-NUMERO_INT (258)
-NUMERO_REAL (259)
-PALAVRA_RESERVADA (260)
-ID (261) 1
-SIMB_ABRE_PARENTESES (262)
-SIMB_FECHA_PARENTESES (263)
-SIMB_PONTO_VIRGULA (264)
-SIMB_PONTO (265)
-SIMB_MULTIPLICACAO (266)
-SIMB_DIVISAO (267)
-SIMB_DOIS_PONTOS (268)
-SIMB_VIRGULA (269)
-SIMB_ADICAO (270)
-SIMB_SUBTRACAO (271)
-SIMB_MAIOR (272)
-SIMB_MENOR (273)
-SIMB_DIFERENTE (274)
-SIMB_MENOR_IGUAL (275)
-SIMB_MAIOR_IGUAL (276)
-COMENTARIO (277)
-SIMB_ERRO (278)
-SIMB_ATRIBUICAO (279)
-SIMB_IGUAL (280)
+NUMERO_INT (258) 61
+NUMERO_REAL (259) 62
+ID (260) 1 4 10 13 24 35 36 58
+SIMB_DIFERENTE (261) 40
+SIMB_MENOR_IGUAL (262) 42
+SIMB_MAIOR_IGUAL (263) 41
+COMENTARIO (264)
+SIMB_ERRO (265)
+SIMB_ATRIBUICAO (266) 35
+SIMB_IGUAL (267)
+PROGRAM (268) 1
+P_BEGIN (269) 2 20 37
+P_END (270) 2 20 37
+CONST (271) 4
+VAR (272) 6
+REAL (273) 8
+INTEGER (274) 9
+PROCEDURE (275) 13
+IF (276) 34
+THEN (277) 34
+ELSE (278) 27
+WHILE (279) 33
+FOR (280)
+DO (281) 33
+WRITE (282) 32
+READ (283) 31
 
 
 Nonterminals, with rules where they appear
 
-$accept (31)
+$accept (42)
     on left: 0
-programa (32)
+programa (43)
     on left: 1, on right: 0
-corpo (33)
+corpo (44)
     on left: 2, on right: 1
+dc (45)
+    on left: 3, on right: 2
+dc_c (46)
+    on left: 4 5, on right: 3 4
+dc_v (47)
+    on left: 6 7, on right: 3 6 21
+tipo_var (48)
+    on left: 8 9, on right: 6 17
+variaveis (49)
+    on left: 10, on right: 6 11 17 31 32
+mais_var (50)
+    on left: 11 12, on right: 10
+dc_p (51)
+    on left: 13 14, on right: 3 13
+parametros (52)
+    on left: 15 16, on right: 13
+lista_par (53)
+    on left: 17, on right: 15 18
+mais_par (54)
+    on left: 18 19, on right: 17
+corpo_p (55)
+    on left: 20, on right: 13
+dc_loc (56)
+    on left: 21, on right: 20
+lista_arg (57)
+    on left: 22 23, on right: 36
+argumentos (58)
+    on left: 24, on right: 22 25
+mais_ident (59)
+    on left: 25 26, on right: 24
+pfalsa (60)
+    on left: 27 28, on right: 34
+comandos (61)
+    on left: 29 30, on right: 2 20 29 37
+cmd (62)
+    on left: 31 32 33 34 35 36 37, on right: 27 29 33 34
+condicao (63)
+    on left: 38, on right: 33 34
+relacao (64)
+    on left: 39 40 41 42 43 44, on right: 38
+expressao (65)
+    on left: 45, on right: 35 38 60
+op_un (66)
+    on left: 46 47 48, on right: 53
+outros_termos (67)
+    on left: 49 50, on right: 45 49
+op_ad (68)
+    on left: 51 52, on right: 49
+termo (69)
+    on left: 53, on right: 45 49
+mais_fatores (70)
+    on left: 54 55, on right: 53 54
+op_mul (71)
+    on left: 56 57, on right: 54
+fator (72)
+    on left: 58 59 60, on right: 53 54
+numero (73)
+    on left: 61 62, on right: 4 59
 
 
 State 0
 
     0 $accept: . programa $end
 
-    'p'  shift, and go to state 1
+    PROGRAM  shift, and go to state 1
 
     programa  go to state 2
 
 
 State 1
 
-    1 programa: 'p' . ID ';' corpo '.'
+    1 programa: PROGRAM . ID ';' corpo '.'
 
     ID  shift, and go to state 3
 
@@ -102,7 +245,7 @@ State 2
 
 State 3
 
-    1 programa: 'p' ID . ';' corpo '.'
+    1 programa: PROGRAM ID . ';' corpo '.'
 
     ';'  shift, and go to state 5
 
@@ -116,36 +259,1072 @@ State 4
 
 State 5
 
-    1 programa: 'p' ID ';' . corpo '.'
+    1 programa: PROGRAM ID ';' . corpo '.'
 
-    'b'  shift, and go to state 6
+    CONST  shift, and go to state 6
+
+    $default  reduce using rule 5 (dc_c)
 
     corpo  go to state 7
+    dc     go to state 8
+    dc_c   go to state 9
 
 
 State 6
 
-    2 corpo: 'b' . 'e'
+    4 dc_c: CONST . ID '=' numero ';' dc_c
 
-    'e'  shift, and go to state 8
+    ID  shift, and go to state 10
 
 
 State 7
 
-    1 programa: 'p' ID ';' corpo . '.'
+    1 programa: PROGRAM ID ';' corpo . '.'
 
-    '.'  shift, and go to state 9
+    '.'  shift, and go to state 11
 
 
 State 8
 
-    2 corpo: 'b' 'e' .
+    2 corpo: dc . P_BEGIN comandos P_END
 
-    $default  reduce using rule 2 (corpo)
+    P_BEGIN  shift, and go to state 12
 
 
 State 9
 
-    1 programa: 'p' ID ';' corpo '.' .
+    3 dc: dc_c . dc_v dc_p
+
+    VAR  shift, and go to state 13
+
+    $default  reduce using rule 7 (dc_v)
+
+    dc_v  go to state 14
+
+
+State 10
+
+    4 dc_c: CONST ID . '=' numero ';' dc_c
+
+    '='  shift, and go to state 15
+
+
+State 11
+
+    1 programa: PROGRAM ID ';' corpo '.' .
 
     $default  reduce using rule 1 (programa)
+
+
+State 12
+
+    2 corpo: dc P_BEGIN . comandos P_END
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    $default  reduce using rule 30 (comandos)
+
+    comandos  go to state 22
+    cmd       go to state 23
+
+
+State 13
+
+    6 dc_v: VAR . variaveis ':' tipo_var ';' dc_v
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 25
+
+
+State 14
+
+    3 dc: dc_c dc_v . dc_p
+
+    PROCEDURE  shift, and go to state 26
+
+    $default  reduce using rule 14 (dc_p)
+
+    dc_p  go to state 27
+
+
+State 15
+
+    4 dc_c: CONST ID '=' . numero ';' dc_c
+
+    NUMERO_INT   shift, and go to state 28
+    NUMERO_REAL  shift, and go to state 29
+
+    numero  go to state 30
+
+
+State 16
+
+   35 cmd: ID . SIMB_ATRIBUICAO expressao
+   36    | ID . lista_arg
+
+    SIMB_ATRIBUICAO  shift, and go to state 31
+    '('              shift, and go to state 32
+
+    $default  reduce using rule 23 (lista_arg)
+
+    lista_arg  go to state 33
+
+
+State 17
+
+   37 cmd: P_BEGIN . comandos P_END
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    $default  reduce using rule 30 (comandos)
+
+    comandos  go to state 34
+    cmd       go to state 23
+
+
+State 18
+
+   34 cmd: IF . condicao THEN cmd pfalsa
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    condicao   go to state 37
+    expressao  go to state 38
+    op_un      go to state 39
+    termo      go to state 40
+
+
+State 19
+
+   33 cmd: WHILE . '(' condicao ')' DO cmd
+
+    '('  shift, and go to state 41
+
+
+State 20
+
+   32 cmd: WRITE . '(' variaveis ')'
+
+    '('  shift, and go to state 42
+
+
+State 21
+
+   31 cmd: READ . '(' variaveis ')'
+
+    '('  shift, and go to state 43
+
+
+State 22
+
+    2 corpo: dc P_BEGIN comandos . P_END
+
+    P_END  shift, and go to state 44
+
+
+State 23
+
+   29 comandos: cmd . ';' comandos
+
+    ';'  shift, and go to state 45
+
+
+State 24
+
+   10 variaveis: ID . mais_var
+
+    ','  shift, and go to state 46
+
+    $default  reduce using rule 12 (mais_var)
+
+    mais_var  go to state 47
+
+
+State 25
+
+    6 dc_v: VAR variaveis . ':' tipo_var ';' dc_v
+
+    ':'  shift, and go to state 48
+
+
+State 26
+
+   13 dc_p: PROCEDURE . ID parametros ';' corpo_p dc_p
+
+    ID  shift, and go to state 49
+
+
+State 27
+
+    3 dc: dc_c dc_v dc_p .
+
+    $default  reduce using rule 3 (dc)
+
+
+State 28
+
+   61 numero: NUMERO_INT .
+
+    $default  reduce using rule 61 (numero)
+
+
+State 29
+
+   62 numero: NUMERO_REAL .
+
+    $default  reduce using rule 62 (numero)
+
+
+State 30
+
+    4 dc_c: CONST ID '=' numero . ';' dc_c
+
+    ';'  shift, and go to state 50
+
+
+State 31
+
+   35 cmd: ID SIMB_ATRIBUICAO . expressao
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    expressao  go to state 51
+    op_un      go to state 39
+    termo      go to state 40
+
+
+State 32
+
+   22 lista_arg: '(' . argumentos ')'
+
+    ID  shift, and go to state 52
+
+    argumentos  go to state 53
+
+
+State 33
+
+   36 cmd: ID lista_arg .
+
+    $default  reduce using rule 36 (cmd)
+
+
+State 34
+
+   37 cmd: P_BEGIN comandos . P_END
+
+    P_END  shift, and go to state 54
+
+
+State 35
+
+   46 op_un: '+' .
+
+    $default  reduce using rule 46 (op_un)
+
+
+State 36
+
+   47 op_un: '-' .
+
+    $default  reduce using rule 47 (op_un)
+
+
+State 37
+
+   34 cmd: IF condicao . THEN cmd pfalsa
+
+    THEN  shift, and go to state 55
+
+
+State 38
+
+   38 condicao: expressao . relacao expressao
+
+    SIMB_DIFERENTE    shift, and go to state 56
+    SIMB_MENOR_IGUAL  shift, and go to state 57
+    SIMB_MAIOR_IGUAL  shift, and go to state 58
+    '='               shift, and go to state 59
+    '>'               shift, and go to state 60
+    '<'               shift, and go to state 61
+
+    relacao  go to state 62
+
+
+State 39
+
+   53 termo: op_un . fator mais_fatores
+
+    NUMERO_INT   shift, and go to state 28
+    NUMERO_REAL  shift, and go to state 29
+    ID           shift, and go to state 63
+    '('          shift, and go to state 64
+
+    fator   go to state 65
+    numero  go to state 66
+
+
+State 40
+
+   45 expressao: termo . outros_termos
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+
+    $default  reduce using rule 50 (outros_termos)
+
+    outros_termos  go to state 69
+    op_ad          go to state 70
+
+
+State 41
+
+   33 cmd: WHILE '(' . condicao ')' DO cmd
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    condicao   go to state 71
+    expressao  go to state 38
+    op_un      go to state 39
+    termo      go to state 40
+
+
+State 42
+
+   32 cmd: WRITE '(' . variaveis ')'
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 72
+
+
+State 43
+
+   31 cmd: READ '(' . variaveis ')'
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 73
+
+
+State 44
+
+    2 corpo: dc P_BEGIN comandos P_END .
+
+    $default  reduce using rule 2 (corpo)
+
+
+State 45
+
+   29 comandos: cmd ';' . comandos
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    $default  reduce using rule 30 (comandos)
+
+    comandos  go to state 74
+    cmd       go to state 23
+
+
+State 46
+
+   11 mais_var: ',' . variaveis
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 75
+
+
+State 47
+
+   10 variaveis: ID mais_var .
+
+    $default  reduce using rule 10 (variaveis)
+
+
+State 48
+
+    6 dc_v: VAR variaveis ':' . tipo_var ';' dc_v
+
+    REAL     shift, and go to state 76
+    INTEGER  shift, and go to state 77
+
+    tipo_var  go to state 78
+
+
+State 49
+
+   13 dc_p: PROCEDURE ID . parametros ';' corpo_p dc_p
+
+    '('  shift, and go to state 79
+
+    $default  reduce using rule 16 (parametros)
+
+    parametros  go to state 80
+
+
+State 50
+
+    4 dc_c: CONST ID '=' numero ';' . dc_c
+
+    CONST  shift, and go to state 6
+
+    $default  reduce using rule 5 (dc_c)
+
+    dc_c  go to state 81
+
+
+State 51
+
+   35 cmd: ID SIMB_ATRIBUICAO expressao .
+
+    $default  reduce using rule 35 (cmd)
+
+
+State 52
+
+   24 argumentos: ID . mais_ident
+
+    ';'  shift, and go to state 82
+
+    $default  reduce using rule 26 (mais_ident)
+
+    mais_ident  go to state 83
+
+
+State 53
+
+   22 lista_arg: '(' argumentos . ')'
+
+    ')'  shift, and go to state 84
+
+
+State 54
+
+   37 cmd: P_BEGIN comandos P_END .
+
+    $default  reduce using rule 37 (cmd)
+
+
+State 55
+
+   34 cmd: IF condicao THEN . cmd pfalsa
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    cmd  go to state 85
+
+
+State 56
+
+   40 relacao: SIMB_DIFERENTE .
+
+    $default  reduce using rule 40 (relacao)
+
+
+State 57
+
+   42 relacao: SIMB_MENOR_IGUAL .
+
+    $default  reduce using rule 42 (relacao)
+
+
+State 58
+
+   41 relacao: SIMB_MAIOR_IGUAL .
+
+    $default  reduce using rule 41 (relacao)
+
+
+State 59
+
+   39 relacao: '=' .
+
+    $default  reduce using rule 39 (relacao)
+
+
+State 60
+
+   43 relacao: '>' .
+
+    $default  reduce using rule 43 (relacao)
+
+
+State 61
+
+   44 relacao: '<' .
+
+    $default  reduce using rule 44 (relacao)
+
+
+State 62
+
+   38 condicao: expressao relacao . expressao
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    expressao  go to state 86
+    op_un      go to state 39
+    termo      go to state 40
+
+
+State 63
+
+   58 fator: ID .
+
+    $default  reduce using rule 58 (fator)
+
+
+State 64
+
+   60 fator: '(' . expressao ')'
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    expressao  go to state 87
+    op_un      go to state 39
+    termo      go to state 40
+
+
+State 65
+
+   53 termo: op_un fator . mais_fatores
+
+    '*'  shift, and go to state 88
+    '/'  shift, and go to state 89
+
+    $default  reduce using rule 55 (mais_fatores)
+
+    mais_fatores  go to state 90
+    op_mul        go to state 91
+
+
+State 66
+
+   59 fator: numero .
+
+    $default  reduce using rule 59 (fator)
+
+
+State 67
+
+   51 op_ad: '+' .
+
+    $default  reduce using rule 51 (op_ad)
+
+
+State 68
+
+   52 op_ad: '-' .
+
+    $default  reduce using rule 52 (op_ad)
+
+
+State 69
+
+   45 expressao: termo outros_termos .
+
+    $default  reduce using rule 45 (expressao)
+
+
+State 70
+
+   49 outros_termos: op_ad . termo outros_termos
+
+    '+'  shift, and go to state 35
+    '-'  shift, and go to state 36
+
+    $default  reduce using rule 48 (op_un)
+
+    op_un  go to state 39
+    termo  go to state 92
+
+
+State 71
+
+   33 cmd: WHILE '(' condicao . ')' DO cmd
+
+    ')'  shift, and go to state 93
+
+
+State 72
+
+   32 cmd: WRITE '(' variaveis . ')'
+
+    ')'  shift, and go to state 94
+
+
+State 73
+
+   31 cmd: READ '(' variaveis . ')'
+
+    ')'  shift, and go to state 95
+
+
+State 74
+
+   29 comandos: cmd ';' comandos .
+
+    $default  reduce using rule 29 (comandos)
+
+
+State 75
+
+   11 mais_var: ',' variaveis .
+
+    $default  reduce using rule 11 (mais_var)
+
+
+State 76
+
+    8 tipo_var: REAL .
+
+    $default  reduce using rule 8 (tipo_var)
+
+
+State 77
+
+    9 tipo_var: INTEGER .
+
+    $default  reduce using rule 9 (tipo_var)
+
+
+State 78
+
+    6 dc_v: VAR variaveis ':' tipo_var . ';' dc_v
+
+    ';'  shift, and go to state 96
+
+
+State 79
+
+   15 parametros: '(' . lista_par ')'
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 97
+    lista_par  go to state 98
+
+
+State 80
+
+   13 dc_p: PROCEDURE ID parametros . ';' corpo_p dc_p
+
+    ';'  shift, and go to state 99
+
+
+State 81
+
+    4 dc_c: CONST ID '=' numero ';' dc_c .
+
+    $default  reduce using rule 4 (dc_c)
+
+
+State 82
+
+   25 mais_ident: ';' . argumentos
+
+    ID  shift, and go to state 52
+
+    argumentos  go to state 100
+
+
+State 83
+
+   24 argumentos: ID mais_ident .
+
+    $default  reduce using rule 24 (argumentos)
+
+
+State 84
+
+   22 lista_arg: '(' argumentos ')' .
+
+    $default  reduce using rule 22 (lista_arg)
+
+
+State 85
+
+   34 cmd: IF condicao THEN cmd . pfalsa
+
+    ELSE  shift, and go to state 101
+
+    ELSE      [reduce using rule 28 (pfalsa)]
+    $default  reduce using rule 28 (pfalsa)
+
+    pfalsa  go to state 102
+
+
+State 86
+
+   38 condicao: expressao relacao expressao .
+
+    $default  reduce using rule 38 (condicao)
+
+
+State 87
+
+   60 fator: '(' expressao . ')'
+
+    ')'  shift, and go to state 103
+
+
+State 88
+
+   56 op_mul: '*' .
+
+    $default  reduce using rule 56 (op_mul)
+
+
+State 89
+
+   57 op_mul: '/' .
+
+    $default  reduce using rule 57 (op_mul)
+
+
+State 90
+
+   53 termo: op_un fator mais_fatores .
+
+    $default  reduce using rule 53 (termo)
+
+
+State 91
+
+   54 mais_fatores: op_mul . fator mais_fatores
+
+    NUMERO_INT   shift, and go to state 28
+    NUMERO_REAL  shift, and go to state 29
+    ID           shift, and go to state 63
+    '('          shift, and go to state 64
+
+    fator   go to state 104
+    numero  go to state 66
+
+
+State 92
+
+   49 outros_termos: op_ad termo . outros_termos
+
+    '+'  shift, and go to state 67
+    '-'  shift, and go to state 68
+
+    $default  reduce using rule 50 (outros_termos)
+
+    outros_termos  go to state 105
+    op_ad          go to state 70
+
+
+State 93
+
+   33 cmd: WHILE '(' condicao ')' . DO cmd
+
+    DO  shift, and go to state 106
+
+
+State 94
+
+   32 cmd: WRITE '(' variaveis ')' .
+
+    $default  reduce using rule 32 (cmd)
+
+
+State 95
+
+   31 cmd: READ '(' variaveis ')' .
+
+    $default  reduce using rule 31 (cmd)
+
+
+State 96
+
+    6 dc_v: VAR variaveis ':' tipo_var ';' . dc_v
+
+    VAR  shift, and go to state 13
+
+    $default  reduce using rule 7 (dc_v)
+
+    dc_v  go to state 107
+
+
+State 97
+
+   17 lista_par: variaveis . ':' tipo_var mais_par
+
+    ':'  shift, and go to state 108
+
+
+State 98
+
+   15 parametros: '(' lista_par . ')'
+
+    ')'  shift, and go to state 109
+
+
+State 99
+
+   13 dc_p: PROCEDURE ID parametros ';' . corpo_p dc_p
+
+    VAR  shift, and go to state 13
+
+    $default  reduce using rule 7 (dc_v)
+
+    dc_v     go to state 110
+    corpo_p  go to state 111
+    dc_loc   go to state 112
+
+
+State 100
+
+   25 mais_ident: ';' argumentos .
+
+    $default  reduce using rule 25 (mais_ident)
+
+
+State 101
+
+   27 pfalsa: ELSE . cmd
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    cmd  go to state 113
+
+
+State 102
+
+   34 cmd: IF condicao THEN cmd pfalsa .
+
+    $default  reduce using rule 34 (cmd)
+
+
+State 103
+
+   60 fator: '(' expressao ')' .
+
+    $default  reduce using rule 60 (fator)
+
+
+State 104
+
+   54 mais_fatores: op_mul fator . mais_fatores
+
+    '*'  shift, and go to state 88
+    '/'  shift, and go to state 89
+
+    $default  reduce using rule 55 (mais_fatores)
+
+    mais_fatores  go to state 114
+    op_mul        go to state 91
+
+
+State 105
+
+   49 outros_termos: op_ad termo outros_termos .
+
+    $default  reduce using rule 49 (outros_termos)
+
+
+State 106
+
+   33 cmd: WHILE '(' condicao ')' DO . cmd
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    cmd  go to state 115
+
+
+State 107
+
+    6 dc_v: VAR variaveis ':' tipo_var ';' dc_v .
+
+    $default  reduce using rule 6 (dc_v)
+
+
+State 108
+
+   17 lista_par: variaveis ':' . tipo_var mais_par
+
+    REAL     shift, and go to state 76
+    INTEGER  shift, and go to state 77
+
+    tipo_var  go to state 116
+
+
+State 109
+
+   15 parametros: '(' lista_par ')' .
+
+    $default  reduce using rule 15 (parametros)
+
+
+State 110
+
+   21 dc_loc: dc_v .
+
+    $default  reduce using rule 21 (dc_loc)
+
+
+State 111
+
+   13 dc_p: PROCEDURE ID parametros ';' corpo_p . dc_p
+
+    PROCEDURE  shift, and go to state 26
+
+    $default  reduce using rule 14 (dc_p)
+
+    dc_p  go to state 117
+
+
+State 112
+
+   20 corpo_p: dc_loc . P_BEGIN comandos P_END ';'
+
+    P_BEGIN  shift, and go to state 118
+
+
+State 113
+
+   27 pfalsa: ELSE cmd .
+
+    $default  reduce using rule 27 (pfalsa)
+
+
+State 114
+
+   54 mais_fatores: op_mul fator mais_fatores .
+
+    $default  reduce using rule 54 (mais_fatores)
+
+
+State 115
+
+   33 cmd: WHILE '(' condicao ')' DO cmd .
+
+    $default  reduce using rule 33 (cmd)
+
+
+State 116
+
+   17 lista_par: variaveis ':' tipo_var . mais_par
+
+    ';'  shift, and go to state 119
+
+    $default  reduce using rule 19 (mais_par)
+
+    mais_par  go to state 120
+
+
+State 117
+
+   13 dc_p: PROCEDURE ID parametros ';' corpo_p dc_p .
+
+    $default  reduce using rule 13 (dc_p)
+
+
+State 118
+
+   20 corpo_p: dc_loc P_BEGIN . comandos P_END ';'
+
+    ID       shift, and go to state 16
+    P_BEGIN  shift, and go to state 17
+    IF       shift, and go to state 18
+    WHILE    shift, and go to state 19
+    WRITE    shift, and go to state 20
+    READ     shift, and go to state 21
+
+    $default  reduce using rule 30 (comandos)
+
+    comandos  go to state 121
+    cmd       go to state 23
+
+
+State 119
+
+   18 mais_par: ';' . lista_par
+
+    ID  shift, and go to state 24
+
+    variaveis  go to state 97
+    lista_par  go to state 122
+
+
+State 120
+
+   17 lista_par: variaveis ':' tipo_var mais_par .
+
+    $default  reduce using rule 17 (lista_par)
+
+
+State 121
+
+   20 corpo_p: dc_loc P_BEGIN comandos . P_END ';'
+
+    P_END  shift, and go to state 123
+
+
+State 122
+
+   18 mais_par: ';' lista_par .
+
+    $default  reduce using rule 18 (mais_par)
+
+
+State 123
+
+   20 corpo_p: dc_loc P_BEGIN comandos P_END . ';'
+
+    ';'  shift, and go to state 124
+
+
+State 124
+
+   20 corpo_p: dc_loc P_BEGIN comandos P_END ';' .
+
+    $default  reduce using rule 20 (corpo_p)

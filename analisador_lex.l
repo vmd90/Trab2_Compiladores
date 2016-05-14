@@ -33,14 +33,15 @@ id                      [a-zA-Z][a-zA-Z0-9\_]*
 ":="                    return SIMB_ATRIBUICAO;
 "="                     return SIMB_IGUAL;
 "program"		return PROGRAM;
-"begin"			return BEGIN;
-"end"			return END;
+"begin"			return P_BEGIN;
+"end"			return P_END;
 "const"			return CONST;
 "var"			return VAR;
 "real"			return REAL;
 "integer"		return INTEGER;
 "procedure"		return PROCEDURE;
 "if"			return IF;
+"then"			return THEN;
 "else"			return ELSE;
 "while"			return WHILE;
 "for"			return FOR;

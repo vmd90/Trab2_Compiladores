@@ -1,4 +1,3 @@
-
 %{
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,21 +7,8 @@ void yyerror (char *s);
 
 %start programa
 %token NUMERO_INT           
-%token NUMERO_REAL          
-%token PALAVRA_RESERVADA    
-%token ID                   
-%token SIMB_ABRE_PARENTESES 
-%token SIMB_FECHA_PARENTESES
-%token SIMB_PONTO_VIRGULA   
-%token SIMB_PONTO           
-%token SIMB_MULTIPLICACAO   
-%token SIMB_DIVISAO          
-%token SIMB_DOIS_PONTOS      
-%token SIMB_VIRGULA          
-%token SIMB_ADICAO           
-%token SIMB_SUBTRACAO        
-%token SIMB_MAIOR            
-%token SIMB_MENOR            
+%token NUMERO_REAL  
+%token ID          
 %token SIMB_DIFERENTE        
 %token SIMB_MENOR_IGUAL      
 %token SIMB_MAIOR_IGUAL      
@@ -30,28 +16,44 @@ void yyerror (char *s);
 %token SIMB_ERRO             
 %token SIMB_ATRIBUICAO       
 %token SIMB_IGUAL
+%token PROGRAM	
+%token P_BEGIN	
+%token P_END		
+%token CONST	
+%token VAR		
+%token REAL 	
+%token INTEGER	
+%token PROCEDURE
+%token IF		
+%token THEN
+%token ELSE	
+%token WHILE	
+%token FOR		
+%token DO 		
+%token WRITE	
+%token READ 	
 
 %% /* gramatica */
 
-programa: 'program' ID ';' corpo '.'	{;}
+programa: PROGRAM ID ';' corpo '.'	{;}
 		;
 
-corpo: dc 'begin' comandos 'end'		{;}
+corpo: dc P_BEGIN comandos P_END		{;}
 		;
 
 dc: dc_c dc_v dc_p						{;}
 		;
 
-dc_c: 'const' ID '=' numero ';' dc_c	{;}
+dc_c: CONST ID '=' numero ';' dc_c	{;}
 		|
 		;
 
-dc_v: 'var' variaveis ':' tipo_var ';' dc_v		{;}
+dc_v: VAR variaveis ':' tipo_var ';' dc_v		{;}
 		|
 		;
 
-tipo_var: 'real'		{;}
-		| 'integer'		{;}
+tipo_var: REAL		{;}
+		| INTEGER		{;}
 		;
 
 variaveis: ID mais_var		{;}
@@ -61,7 +63,7 @@ mais_var: ',' variaveis		{;}
 		|
 		;
 
-dc_p: 'procedure' ID parametros ';' corpo_p dc_p	{;}
+dc_p: PROCEDURE ID parametros ';' corpo_p dc_p	{;}
 		|
 		;
 
@@ -69,14 +71,14 @@ parametros: '(' lista_par ')'		{;}
 		|
 		;
 
-lista_par: variaveis ':' tipo_var mais_var	{;}
+lista_par: variaveis ':' tipo_var mais_par	{;}
 		;
 
 mais_par: ';' lista_par		{;}
 		|
 		;
 
-corpo_p: dc_loc 'begin' comandos 'end' ';'	{;}
+corpo_p: dc_loc P_BEGIN comandos P_END ';'	{;}
 		;
 
 dc_loc: dc_v		{;}
@@ -93,7 +95,7 @@ mais_ident: ';' argumentos	{;}
 		|
 		;
 
-pfalsa: 'else' cmd 		{;}
+pfalsa: ELSE cmd 		{;}
 		|
 		;
 
@@ -101,22 +103,22 @@ comandos: cmd ';' comandos		{;}
 		|
 		;
 
-cmd: 'read' '(' variaveis ')'					{;}
-		| 'write' '(' variaveis ')' 			{;}
-		| 'while' '(' condicao ')' 'do' cmd 	{;}
-		| 'if' condicao 'then' cmd pfalsa		{;}
-		| ID ':=' expressao						{;}
+cmd: READ '(' variaveis ')'					{;}
+		| WRITE '(' variaveis ')' 			{;}
+		| WHILE '(' condicao ')' DO cmd 	{;}
+		| IF condicao THEN cmd pfalsa		{;}
+		| ID SIMB_ATRIBUICAO expressao						{;}
 		| ID lista_arg							{;}
-		| 'begin' comandos 'end'				{;}
+		| P_BEGIN comandos P_END				{;}
 		;
 
 condicao: expressao relacao expressao		{;}
 		;
 
 relacao: '='	{;}
-		| '<>'	{;}
-		| '>='	{;}
-		| '<='	{;}
+		| SIMB_DIFERENTE	{;}
+		| SIMB_MAIOR_IGUAL	{;}
+		| SIMB_MENOR_IGUAL	{;}
 		| '>' 	{;}
 		| '<'	{;}
 		;
@@ -138,6 +140,10 @@ op_ad: '+'	{;}
 		;
 
 termo: op_un fator mais_fatores		{;}
+		;
+
+mais_fatores: op_mul fator mais_fatores    {;}
+		|
 		;
 
 op_mul: '*'		{;}
