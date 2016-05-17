@@ -1,0 +1,16 @@
+{ Comentario.Comentario.Comentario
+Comentario
+Comentario, Comentario ----------
+}
+program TEST;
+	{---------TESTE!----------}
+	const y = -20.0774;
+	var x : real;
+begin
+	x ~= y/2;  { <<= erro aqui}
+	
+	while(x <= y) do
+	begin
+		x := x - x * .35;
+	end;
+end.

@@ -1,11 +1,13 @@
 %{
+void yyerror (char *s);
+
 #include <stdio.h>
 #include <stdlib.h>
-void yyerror (char *s);
+
+extern int lineno;
 
 %}
 
-%start programa
 %token NUMERO_INT           
 %token NUMERO_REAL  
 %token ID          
@@ -31,11 +33,13 @@ void yyerror (char *s);
 %token FOR		
 %token DO 		
 %token WRITE	
-%token READ 	
+%token READ
+
+%start programa
 
 %% /* gramatica */
 
-programa: PROGRAM ID ';' corpo '.'	{;}
+programa: PROGRAM ID ';' corpo '.'		{;}
 		;
 
 corpo: dc P_BEGIN comandos P_END		{;}
@@ -161,10 +165,14 @@ numero: NUMERO_INT		{;}
 
 %%
 
-int main (void) {
-	
-
-	return yyparse ( );
+int main (void)
+{
+	lineno = 1;
+	yyparse();
+	return 0;
 }
 
-void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
+void yyerror (char *s)
+{
+	fprintf(stderr, " %s, line %d\n", s, lineno);
+}

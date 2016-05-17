@@ -64,12 +64,15 @@
 /* Copy the first part of user declarations.  */
 #line 1 "analisador_sintatico.y" /* yacc.c:339  */
 
-#include <stdio.h>
-#include <stdlib.h>
 void yyerror (char *s);
 
+#include <stdio.h>
+#include <stdlib.h>
 
-#line 73 "y.tab.c" /* yacc.c:339  */
+extern int lineno;
+
+
+#line 76 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -176,7 +179,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 180 "y.tab.c" /* yacc.c:358  */
+#line 183 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -476,13 +479,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    38,    38,    41,    44,    47,    48,    51,    52,    55,
-      56,    59,    62,    63,    66,    67,    70,    71,    74,    77,
-      78,    81,    84,    87,    88,    91,    94,    95,    98,    99,
-     102,   103,   106,   107,   108,   109,   110,   111,   112,   115,
-     118,   119,   120,   121,   122,   123,   126,   129,   130,   131,
-     134,   135,   138,   139,   142,   145,   146,   149,   150,   153,
-     154,   155,   158,   159
+       0,    42,    42,    45,    48,    51,    52,    55,    56,    59,
+      60,    63,    66,    67,    70,    71,    74,    75,    78,    81,
+      82,    85,    88,    91,    92,    95,    98,    99,   102,   103,
+     106,   107,   110,   111,   112,   113,   114,   115,   116,   119,
+     122,   123,   124,   125,   126,   127,   130,   133,   134,   135,
+     138,   139,   142,   143,   146,   149,   150,   153,   154,   157,
+     158,   159,   162,   163
 };
 #endif
 
@@ -1336,301 +1339,301 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 38 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 42 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1342 "y.tab.c" /* yacc.c:1646  */
+#line 1345 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 41 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 45 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1348 "y.tab.c" /* yacc.c:1646  */
+#line 1351 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 44 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 48 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1354 "y.tab.c" /* yacc.c:1646  */
+#line 1357 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 47 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 51 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1360 "y.tab.c" /* yacc.c:1646  */
+#line 1363 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 51 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 55 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1366 "y.tab.c" /* yacc.c:1646  */
+#line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 55 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 59 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1372 "y.tab.c" /* yacc.c:1646  */
+#line 1375 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 56 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 60 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1378 "y.tab.c" /* yacc.c:1646  */
+#line 1381 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 59 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 63 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1384 "y.tab.c" /* yacc.c:1646  */
+#line 1387 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 62 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 66 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1390 "y.tab.c" /* yacc.c:1646  */
+#line 1393 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 66 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 70 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1396 "y.tab.c" /* yacc.c:1646  */
+#line 1399 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 70 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 74 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1402 "y.tab.c" /* yacc.c:1646  */
+#line 1405 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 74 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 78 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1408 "y.tab.c" /* yacc.c:1646  */
+#line 1411 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 77 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 81 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1414 "y.tab.c" /* yacc.c:1646  */
+#line 1417 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 81 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 85 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1420 "y.tab.c" /* yacc.c:1646  */
+#line 1423 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 84 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 88 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1426 "y.tab.c" /* yacc.c:1646  */
+#line 1429 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 87 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 91 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1432 "y.tab.c" /* yacc.c:1646  */
+#line 1435 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 91 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 95 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1438 "y.tab.c" /* yacc.c:1646  */
+#line 1441 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 94 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 98 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1444 "y.tab.c" /* yacc.c:1646  */
+#line 1447 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 98 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 102 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1450 "y.tab.c" /* yacc.c:1646  */
+#line 1453 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 102 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 106 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1456 "y.tab.c" /* yacc.c:1646  */
+#line 1459 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 106 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 110 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1462 "y.tab.c" /* yacc.c:1646  */
+#line 1465 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 107 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 111 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1468 "y.tab.c" /* yacc.c:1646  */
+#line 1471 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 108 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 112 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1474 "y.tab.c" /* yacc.c:1646  */
+#line 1477 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 109 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 113 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1480 "y.tab.c" /* yacc.c:1646  */
+#line 1483 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 110 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 114 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1486 "y.tab.c" /* yacc.c:1646  */
+#line 1489 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 111 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 115 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1492 "y.tab.c" /* yacc.c:1646  */
+#line 1495 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
-#line 112 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 116 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1501 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
-#line 115 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 119 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1504 "y.tab.c" /* yacc.c:1646  */
+#line 1507 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
-#line 118 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 122 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1510 "y.tab.c" /* yacc.c:1646  */
+#line 1513 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
-#line 119 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 123 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1516 "y.tab.c" /* yacc.c:1646  */
+#line 1519 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
-#line 120 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 124 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1522 "y.tab.c" /* yacc.c:1646  */
+#line 1525 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
-#line 121 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 125 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1528 "y.tab.c" /* yacc.c:1646  */
+#line 1531 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
-#line 122 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 126 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1534 "y.tab.c" /* yacc.c:1646  */
+#line 1537 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
-#line 123 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 127 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1540 "y.tab.c" /* yacc.c:1646  */
+#line 1543 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 126 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 130 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1546 "y.tab.c" /* yacc.c:1646  */
+#line 1549 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
-#line 129 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 133 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1552 "y.tab.c" /* yacc.c:1646  */
+#line 1555 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
-#line 130 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 134 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1558 "y.tab.c" /* yacc.c:1646  */
+#line 1561 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
-#line 134 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 138 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1564 "y.tab.c" /* yacc.c:1646  */
+#line 1567 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
-#line 138 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 142 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1570 "y.tab.c" /* yacc.c:1646  */
+#line 1573 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
-#line 139 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 143 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1576 "y.tab.c" /* yacc.c:1646  */
+#line 1579 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
-#line 142 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 146 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1582 "y.tab.c" /* yacc.c:1646  */
+#line 1585 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
-#line 145 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 149 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1588 "y.tab.c" /* yacc.c:1646  */
+#line 1591 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
-#line 149 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 153 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1594 "y.tab.c" /* yacc.c:1646  */
+#line 1597 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
-#line 150 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 154 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1600 "y.tab.c" /* yacc.c:1646  */
+#line 1603 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
-#line 153 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 157 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1606 "y.tab.c" /* yacc.c:1646  */
+#line 1609 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
-#line 154 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 158 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1612 "y.tab.c" /* yacc.c:1646  */
+#line 1615 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
-#line 155 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 159 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1618 "y.tab.c" /* yacc.c:1646  */
+#line 1621 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
-#line 158 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 162 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1624 "y.tab.c" /* yacc.c:1646  */
+#line 1627 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
-#line 159 "analisador_sintatico.y" /* yacc.c:1646  */
+#line 163 "analisador_sintatico.y" /* yacc.c:1646  */
     {;}
-#line 1630 "y.tab.c" /* yacc.c:1646  */
+#line 1633 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1634 "y.tab.c" /* yacc.c:1646  */
+#line 1637 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1858,13 +1861,17 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 162 "analisador_sintatico.y" /* yacc.c:1906  */
+#line 166 "analisador_sintatico.y" /* yacc.c:1906  */
 
 
-int main (void) {
-	
-
-	return yyparse ( );
+int main (void)
+{
+	lineno = 1;
+	yyparse();
+	return 0;
 }
 
-void yyerror (char *s) {fprintf (stderr, "%s\n", s);} 
+void yyerror (char *s)
+{
+	fprintf(stderr, " %s, line %d\n", s, lineno);
+}
