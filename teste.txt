@@ -2,15 +2,12 @@
 Comentario
 Comentario, Comentario ----------
 }
-program TEST;
-	{---------TESTE!----------}
+
+program t;
 	const y = -20.0774;
-	var x : real;
+	var x : integer;
 begin
-	x ~= y/2;  { <<= erro aqui}
-	
+	readln(x);
 	while(x <= y) do
-	begin
 		x := x - x * .35;
-	end;
 end.
