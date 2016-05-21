@@ -39,129 +39,146 @@ extern int lineno;
 %start programa
 
 %% /* gramatica */
-
-programa: PROGRAM ID ';' corpo '.'		{ printf("SUCCESS!\n"); exit(0); }
-		| error{ esperado("program"); } ID ';' corpo '.'
-		| PROGRAM error{ esperado("id"); } ';' corpo '.'
-		| PROGRAM ID error{ esperado(";"); } corpo '.'
-		| PROGRAM ID ';' corpo error{ esperado("."); }
+programa: PROGRAM ID ';' corpo '.'		{ ; }
+		| error ID ';' corpo '.'		{ esperado("program"); }
+		| PROGRAM error ';' corpo '.'	{ esperado("id"); }
+		| PROGRAM ID error corpo '.'	{ esperado(";"); }
+		| PROGRAM ID ';' error corpo '.'
+		| PROGRAM ID ';' corpo error	{ esperado("."); }
 		;
 
 corpo: dc P_BEGIN comandos P_END		{;}
-		| dc error{ esperado("begin"); } comandos P_END
-		| dc P_BEGIN comandos error{ esperado("end"); }
+		| error P_BEGIN comandos P_END
+		| dc error comandos P_END		{ esperado("begin"); }
+		| | dc P_BEGIN error P_END
+		| dc P_BEGIN comandos error 	{ esperado("end"); }
 		;
 
 dc: dc_c dc_v dc_p						{;}
 		;
 
-dc_c: CONST ID '=' numero ';' dc_c	{;}
-		| error{ esperado("const"); } ID '=' numero ';' dc_c
-		| CONST error{ esperado("id"); } '=' numero ';' dc_c
-		| CONST ID error{ esperado("="); } numero ';' dc_c
-		| CONST ID '=' numero error{ esperado(";"); } dc_c
+dc_c: CONST ID '=' numero ';' dc_c
+		| error ID '=' numero ';' dc_c 			{ esperado("const"); }
+		| CONST error '=' numero ';' dc_c 		{ esperado("id"); }
+		| CONST ID error numero ';' dc_c 		{ esperado("="); }
+		| CONST ID '=' error ';' dc_c 
+		| CONST ID '=' numero error dc_c 		{ esperado(";"); }
 		|
 		;
 
-dc_v: VAR variaveis ':' tipo_var ';' dc_v		{;}
-		| error{ esperado("var"); } variaveis ':' tipo_var ';' dc_v
-		| VAR variaveis error{ esperado(":"); } tipo_var ';' dc_v
-		| VAR variaveis ':' tipo_var error{ esperado(";"); } dc_v
+dc_v: VAR variaveis ':' tipo_var ';' dc_v
+		| error variaveis ':' tipo_var ';' dc_v			{ esperado("var"); }
+		VAR error ':' tipo_var ';' dc_v
+		| VAR variaveis error tipo_var ';' dc_v			{ esperado(":"); }
+		VAR variaveis ':' error ';' dc_v
+		| VAR variaveis ':' tipo_var error dc_v			{ esperado(";"); }
 		|
 		;
 
-tipo_var: REAL		{;}
+tipo_var: REAL			{;}
 		| INTEGER		{;}
-		| error{ esperado("integer, real");}
+		| error 		{ esperado("integer or real keyword");}
 		;
 
 variaveis: ID mais_var		{;}
-		| error{ esperado("id"); } mais_var
+		| error mais_var	{ esperado("id"); }
+		| ID error
 		;
 
 mais_var: ',' variaveis		{;}
-		| error{ esperado(","); } variaveis
+		| error variaveis	{ esperado(","); }
 		|
 		;
 
-dc_p: PROCEDURE ID parametros ';' corpo_p dc_p	{;}
-		| error{ esperado("procedure"); } ID parametros ';' corpo_p dc_p
-		| PROCEDURE error{ esperado("id"); } parametros ';' corpo_p dc_p
-		| PROCEDURE ID parametros error{ esperado(";"); } corpo_p dc_p
+dc_p: PROCEDURE ID parametros ';' corpo_p dc_p			{;}
+		| error ID parametros ';' corpo_p dc_p			{ esperado("procedure"); }
+		| PROCEDURE error parametros ';' corpo_p dc_p	{ esperado("id"); }
+		| PROCEDURE ID error ';' corpo_p dc_p
+		| PROCEDURE ID parametros error corpo_p dc_p	{ esperado(";"); }
+		| PROCEDURE ID parametros ';' error dc_p
+		| PROCEDURE ID parametros ';' corpo_p error
 		|
 		;
 
 parametros: '(' lista_par ')'		{;}
-		| error{ esperado("("); } lista_par ')'
-		| '(' lista_par error{ esperado(")"); }
+		| error lista_par ')'		{ esperado("("); }
+		| '(' error ')'
+		| '(' lista_par error 		{ esperado(")"); }
 		|
 		;
 
-lista_par: variaveis ':' tipo_var mais_par	{;}
-		| variaveis error{ esperado(":"); } tipo_var mais_par
+lista_par: variaveis ':' tipo_var mais_par		{;}
+		| error ':' tipo_var mais_par
+		| variaveis error tipo_var mais_par 	{ esperado(":"); }
+		| variaveis ':' error mais_par
+		| variaveis ':' tipo_var error
 		;
 
 mais_par: ';' lista_par		{;}
-		| error{ esperado(";"); } lista_par
+		| error lista_par	{ esperado(";"); }
+		| ';' error
 		|
 		;
 
-corpo_p: dc_loc P_BEGIN comandos P_END ';'	{;}
-		| dc_loc error{ esperado("begin"); } comandos P_END ';'
-		| dc_loc P_BEGIN comandos error{ esperado("end"); } ';'
-		| dc_loc P_BEGIN comandos P_END error{ esperado(";"); }
+corpo_p: dc_loc P_BEGIN comandos P_END ';'		{;}
+		| error P_BEGIN comandos P_END ';'
+		| dc_loc error comandos P_END ';'		{ esperado("begin"); }
+		| dc_loc P_BEGIN error P_END ';'
+		| dc_loc P_BEGIN comandos error ';'		{ esperado("end"); }
+		| dc_loc P_BEGIN comandos P_END error 	{ esperado(";"); }
 		;
 
 dc_loc: dc_v		{;}
 		;
 
-lista_arg: '(' argumentos ')'	{;}
-		| error{ esperado("("); } argumentos ')'
-		| '(' argumentos error{ esperado(")"); }
+lista_arg: '(' argumentos ')'		{;}
+		| error argumentos ')'		{ esperado("("); }
+		| '(' error ')'
+		| '(' argumentos error 		{ esperado(")"); }
 		|
 		;
 
-argumentos: ID mais_ident	{;}
-		| error{ esperado("id"); } mais_ident
+argumentos: ID mais_ident		{;}
+		| error mais_ident		{ esperado("id"); }
+		| ID error
 		;
 
-mais_ident: ';' argumentos	{;}
-		| error{ esperado(";"); } argumentos
+mais_ident: ';' argumentos		{;}
+		| error argumentos		{ esperado(";"); }
 		|
 		;
 
 pfalsa: ELSE cmd 		{;}
-		| error{ esperado("else"); } cmd
+		| error cmd 	{ esperado("else"); }
+		| ELSE error
 		|
 		;
 
 comandos: cmd ';' comandos		{;}
-		| cmd error{ esperado(";"); } comandos
+		| error ';' comandos
+		| cmd error comandos	{ esperado(";"); }
 		|
 		;
 
-cmd: READ '(' variaveis ')'					{;}
-		| READ error{ esperado("("); } variaveis ')'	
-		| READ '(' variaveis error{ esperado(")"); }	
+cmd: READ '(' variaveis ')'					{;}	
+		| READ error variaveis ')'			{ esperado("("); }
+		| READ '(' error ')'				{;}
+		| READ '(' variaveis error 			{ esperado(")"); }	
 		| WRITE '(' variaveis ')' 			{;}
-		| WRITE error{ esperado("("); } variaveis ')' 
-		| WRITE '(' variaveis error{ esperado(")"); } 
+		| WRITE '(' error ')'	
+		| WRITE error variaveis ')'			{ esperado("("); }
+		| WRITE '(' variaveis error 		{ esperado(")"); } 
 		| WHILE '(' condicao ')' DO cmd 	{;}
-		| error{ esperado("while"); } '(' condicao ')' DO cmd
-		| WHILE error{ esperado("("); } condicao ')' DO cmd
-		| WHILE '(' condicao error{ esperado(")"); } DO cmd
-		| WHILE '(' condicao ')' error{ esperado("do"); } cmd
+		| WHILE error condicao ')' DO cmd 	{ esperado("("); }
+		| WHILE '(' condicao error DO cmd 	{ esperado(")"); }
+		| WHILE '(' condicao ')' error cmd 	{ esperado("do"); }
 		| IF condicao THEN cmd pfalsa		{;}
-		| error{ esperado("if"); } condicao THEN cmd pfalsa
-		| IF condicao error{ esperado("then"); } cmd pfalsa
+		| IF condicao error cmd pfalsa		{ esperado("then"); }
 		| ID SIMB_ATRIBUICAO expressao		{;}
-		| error{ esperado("id"); } SIMB_ATRIBUICAO expressao
-		| ID error{ esperado(":="); } expressao
+		| ID error expressao				{ esperado(":="); }
 		| ID lista_arg						{;}
-		| error{ esperado("id"); } lista_arg
 		| P_BEGIN comandos P_END			{;}
-		| error{ esperado("begin"); } comandos P_END
-		| P_BEGIN comandos error{ esperado("end"); }
+		| P_BEGIN comandos error			{esperado("end");}
 		;
 
 condicao: expressao relacao expressao		{;}
@@ -176,6 +193,8 @@ relacao: '='	{;}
 		;
 
 expressao: termo outros_termos	{;}
+		| error outros_termos
+		| termo error
 		;
 
 op_un: '+'	{;}
@@ -185,6 +204,9 @@ op_un: '+'	{;}
 
 outros_termos: op_ad termo outros_termos	{;}
 		|
+		| error termo outros_termos
+		| op_ad error outros_termos
+		| op_ad termo error
 		;
 
 op_ad: '+'	{;}
@@ -192,10 +214,16 @@ op_ad: '+'	{;}
 		;
 
 termo: op_un fator mais_fatores		{;}
+		| error fator mais_fatores
+		| op_un error mais_fatores
+		| op_un fator error
 		;
 
 mais_fatores: op_mul fator mais_fatores    {;}
 		|
+		| error fator mais_fatores
+		| op_mul error mais_fatores
+		| op_mul fator error
 		;
 
 op_mul: '*'		{;}
@@ -205,10 +233,12 @@ op_mul: '*'		{;}
 fator: ID 	{;}
 		| numero 	{;}
 		| '(' expressao ')'		{;}
+		| '(' error ')'
 		;
 
 numero: NUMERO_INT		{;}
 		| NUMERO_REAL	{;}
+		| error 		{ esperado("integer or real number");}
 		;
 
 %%
@@ -217,6 +247,7 @@ int main (void)
 {
 	lineno = 1;
 	yyparse();
+	printf("DONE!\n");
 	return 0;
 }
 
@@ -227,5 +258,5 @@ void yyerror (char *s)
 
 void esperado(char *s)
 {
-	fprintf(stderr,"Error: %s expected.\n", s);
+	fprintf(stderr,"Error: '%s' expected.\n", s);
 }
